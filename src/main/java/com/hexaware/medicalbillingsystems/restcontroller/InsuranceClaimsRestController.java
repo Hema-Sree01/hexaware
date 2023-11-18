@@ -13,53 +13,38 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hexaware.medicalbillingsystems.dto.InsuranceClaimsDTO;
 import com.hexaware.medicalbillingsystems.entities.InsuranceClaims;
 import com.hexaware.medicalbillingsystems.service.IInsuranceClaimsService;
-
+/*
+@Author :  Rajat Darvhekar 
+Modified Date : 14-11-2023
+Description : Controller  InsuranceClaims
+*/
 @RestController
-	@RequestMapping("/api/insuranceclaims")
-	public class InsuranceClaimsRestController {
-
-	
-	Logger logger =LoggerFactory.getLogger(InsuranceClaimsRestController.class);
-	
-	
-	    private IInsuranceClaimsService claimService;
-	    @Autowired
-		public InsuranceClaimsRestController(IInsuranceClaimsService claimService) {
-		super();
-		this.claimService = claimService;
+@RequestMapping("/api/v1/insuranceclaims")
+public class InsuranceClaimsRestController {
+	@Autowired
+	 private IInsuranceClaimsService claimService;
+	@GetMapping("/new")
+	public String getString() {
+		return "Hello new Claim";
 	}
-        
-		@GetMapping("/new")
-		public String getString() {
-			return "Hello new Claim";
-		}
-
-		@PostMapping("/add/newclaim")
-		public InsuranceClaims insertNewClaim(@RequestBody InsuranceClaimsDTO claimDTO) {
-			return claimService.insertClaims(claimDTO);
-		}
-
-		@PutMapping("/update/claim")
-		public InsuranceClaims updateStatus(@RequestBody InsuranceClaimsDTO claimDTO) {
-			return claimService.updateClaimStatus(claimDTO);
-		}
-
-		@GetMapping("/getclaimbyid/{claimId}")
-		public InsuranceClaimsDTO getClaimById(@PathVariable long claimId) {
-			return claimService.getById(claimId);
-		}
-
-		@GetMapping("/getall/approvedclaims/{claimStatus}")
-		public int getAllApprovedClaims(@PathVariable String claimStatus) {
-			return claimService.getTotalApprovedClaims(claimStatus);
-
-		}
-
-		@GetMapping("/getall/pendingclaims")
-		public int getAllPendingClaims() {
-			return claimService.getTotalPendingInsuranceClaims("Pending");
-
-		}
-
+	@PostMapping(path="/add/newclaim",consumes = "application/json",produces="application/json")
+	public InsuranceClaims insertNewClaim(@RequestBody InsuranceClaimsDTO claimDTO) {
+		return claimService.insertClaims(claimDTO);
 	}
-
+	@PutMapping("/update/claim/{claimId}")
+	public InsuranceClaims updateStatus(@RequestBody InsuranceClaimsDTO claimDTO,@PathVariable long claimId) {
+		return claimService.updateClaimStatus(claimDTO,claimId);
+	}
+	@GetMapping("/getclaimbyid/{claimId}")
+	public InsuranceClaimsDTO getClaimById(@PathVariable long claimId) {
+		return claimService.getById(claimId);
+	}
+	@GetMapping("/getall/approvedclaims/{claimStatus}")
+	public InsuranceClaimsDTO getAllApprovedClaims(@PathVariable String claimStatus) {
+		return claimService.getTotalApprovedClaims(claimStatus);
+	}
+	@GetMapping("/getall/pendingclaims")
+	public InsuranceClaimsDTO getAllPendingClaims() {
+		return claimService.getTotalPendingInsuranceClaims("Pending");
+	}
+}

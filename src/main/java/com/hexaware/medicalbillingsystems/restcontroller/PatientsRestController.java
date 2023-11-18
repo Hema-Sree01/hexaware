@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,61 +23,57 @@ import com.hexaware.medicalbillingsystems.exception.PatientNotFoundException;
 import com.hexaware.medicalbillingsystems.exception.PlanNotFoundException;
 import com.hexaware.medicalbillingsystems.service.IInsurancePlansService;
 import com.hexaware.medicalbillingsystems.service.IPatientsService;
-
+/*
+@Author :  Rajat Darvhekar  
+Modified Date : 14-11-2023
+Description : Controller  for Patients 
+*/
 @RestController
-@RequestMapping("/api/patients")
+@RequestMapping("/api/v1/patients")
 public class PatientsRestController {
-	Logger logger =LoggerFactory.getLogger(PatientsRestController.class);
-	
+	Logger logger = LoggerFactory.getLogger(PatientsRestController.class);
 	@Autowired
-	IInsurancePlansService planService;
+	private IInsurancePlansService planService;
 	@Autowired
-	IPatientsService service;
-
+	private IPatientsService service;
 	@GetMapping("/welcome")
 	public String newPatient() {
 		return "Hello New Patient";
 	}
-
 	@PostMapping("/add/new")
+	@PreAuthorize("hasAuthority('PATIENTS')")
 	public Patients insertPatients(@RequestBody PatientsDTO patientDTO) {
-
 		Patients patient = service.addPatients(patientDTO);
-
 		if (patient.getPatientName() == null || patient.getPatientGender() == null) {
+			logger.error("Patient has entered wrong data!!!");
 			throw new PatientIllegalArgumentsException(HttpStatus.BAD_REQUEST, "You have entered Invalid values.");
 		}
 		return patient;
 	}
-
 	@PutMapping("/update/patient")
 	public Patients updatePatient(@RequestBody PatientsDTO patientDTO) {
 		return service.updatepatients(patientDTO);
-
 	}
-
 	@DeleteMapping("/delete/patient/{patientId}")
 	public String deletePatients(@PathVariable int patientId) {
-
 		service.deletePatients(patientId);
-		return "Successfully Delete patient with id: " + patientId;
+		return "Successfully Deleted patient with id: " + patientId;
 	}
-
 	@GetMapping("/getbyname/{patientName}")
 	public PatientsDTO getByPatientName(@PathVariable String patientName) {
 		PatientsDTO patientdto = service.getPatientByName(patientName);
 		if (patientdto.getPatientName() == null) {
+			logger.error("Patient with name " + patientName + " is not registered with us!!!!");
 			throw new PatientNotFoundException(HttpStatus.NOT_FOUND,
 					"Patient with name " + patientName + " does not exist");
 		}
 		return patientdto;
 	}
-
 	@GetMapping("/get/allPatients")
+	@PreAuthorize("hasAuthority('PATIENTS')")
 	public List<Patients> getAllPatients() {
 		return service.getAllPatients();
 	}
-
 	@GetMapping("/searchplanbyname/{planName}")
 	public InsurancePlansDTO getPlanByNamee(@PathVariable String planName) {
 		InsurancePlansDTO planDTO = planService.getPlanByName(planName);

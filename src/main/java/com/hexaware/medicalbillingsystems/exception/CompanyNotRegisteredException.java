@@ -1,22 +1,22 @@
 package com.hexaware.medicalbillingsystems.exception;
 
-
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.server.ResponseStatusException;
+
 /*
 @Author : Rajat Darvhekar  
 Modified Date : 15-10-2023
-Description : Getting the exception of ClaimNotValidException
+Description : Getting the exception of  CompanyNotRegisteredException 
 */
-public class ClaimNotValidException extends ResponseStatusException {
+public class CompanyNotRegisteredException extends ResponseStatusException {
 
 	/**
 	 * 
 	 */
-
 	private static final long serialVersionUID = 1L;
 
-	public ClaimNotValidException(HttpStatusCode status, String reason) {
+	public CompanyNotRegisteredException(HttpStatusCode status, String reason) {
 		super(status, reason);
+		
 	}
 }

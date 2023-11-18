@@ -3,79 +3,52 @@ package com.hexaware.medicalbillingsystems.dto;
 import com.hexaware.medicalbillingsystems.entities.InsuranceCompany;
 import com.hexaware.medicalbillingsystems.entities.InsurancePlans;
 import com.hexaware.medicalbillingsystems.entities.Patients;
-
+/*
+@Author :  Hema Sree 
+Modified Date : 06-11-2023
+Description :DTO class for InsuranceClaims containing various properties
+*/
 public class InsuranceClaimsDTO {
 	private long claimId;
 	private double claimAmount;
-	private String ClaimStatus="Pending";
+	private String claimStatus;
+	private double invoiceAmount;
 	private Patients patient;
-   private InsurancePlans plans;
-    
-   private InsuranceCompany company;
-   
-
-public InsuranceClaimsDTO() {
-	super();
-}
-
-public InsuranceClaimsDTO(long claimId, double claimAmount, String claimStatus, Patients patient, InsurancePlans plans,
-		InsuranceCompany company) {
-	super();
-	this.claimId = claimId;
-	this.claimAmount = claimAmount;
-	ClaimStatus = claimStatus;
-	this.patient = patient;
-	this.plans = plans;
-	this.company = company;
-}
-
-public long getClaimId() {
-	return claimId;
-}
-
-public void setClaimId(long claimId) {
-	this.claimId = claimId;
-}
-
-public double getClaimAmount() {
-	return claimAmount;
-}
-
-public void setClaimAmount(double claimAmount) {
-	this.claimAmount = claimAmount;
-}
-
-public String getClaimStatus() {
-	return ClaimStatus;
-}
-
-public void setClaimStatus(String claimStatus) {
-	ClaimStatus = claimStatus;
-}
-
-public Patients getPatient() {
-	return patient;
-}
-
-public void setPatient(Patients patient) {
-	this.patient = patient;
-}
-
-public InsurancePlans getPlans() {
-	return plans;
-}
-
-public void setPlans(InsurancePlans plans) {
-	this.plans = plans;
-}
-
-public InsuranceCompany getCompany() {
-	return company;
-}
-
-public void setCompany(InsuranceCompany company) {
-	this.company = company;
-}
-   
-
+	private InsurancePlans plans;
+	public long getClaimId() {
+		return claimId;
+	}
+	public void setClaimId(long claimId) {
+		this.claimId = claimId;
+	}
+	public double getClaimAmount() {
+		return claimAmount;
+	}
+	public void setClaimAmount(double claimAmount) {
+		this.claimAmount = claimAmount;
+	}
+	public String getClaimStatus() {
+		return claimStatus;
+	}
+	public void setClaimStatus(String claimStatus) {
+		this.claimStatus = claimStatus;
+	}
+	public Patients getPatient() {
+		return patient;
+	}
+	public void setPatient(Patients patient) {
+		this.patient = patient;
+	}
+	public InsurancePlans getPlans() {
+		return plans;
+	}
+	public void setPlans(InsurancePlans plans) {
+		this.plans = plans;
+	}
+	public double getInvoiceAmount() {
+		return invoiceAmount;
+	}
+	public void setInvoiceAmount(double invoiceAmount) {
+		this.invoiceAmount = invoiceAmount;
+	}
 }

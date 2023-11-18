@@ -1,7 +1,11 @@
 package com.hexaware.medicalbillingsystems.dto;
 
 import com.hexaware.medicalbillingsystems.entities.InsurancePlans;
-
+/*
+@Author :   Rajat Darvhekar 
+Modified Date : 6-11-2023
+Description :DTO class for Patients containing various properties
+*/
 public class PatientsDTO {
 	private long patientId;
 	private String patientName;
@@ -14,26 +18,6 @@ public class PatientsDTO {
 	private String patientDisease;
 	private InsurancePlans plans;
 
-	public PatientsDTO() {
-		super();
-		
-	}
-
-	public PatientsDTO(long patientId, String patientName, String patientEmail, String patientPassword,
-			String patientDOB, String patientGender, long patientContact, String patientAddress, String patientDisease,
-			InsurancePlans plans) {
-		super();
-		this.patientId = patientId;
-		this.patientName = patientName;
-		this.patientEmail = patientEmail;
-		this.patientPassword = patientPassword;
-		this.patientDOB = patientDOB;
-		this.patientGender = patientGender;
-		this.patientContact = patientContact;
-		this.patientAddress = patientAddress;
-		this.patientDisease = patientDisease;
-		this.plans = plans;
-	}
 
 	public long getPatientId() {
 		return patientId;

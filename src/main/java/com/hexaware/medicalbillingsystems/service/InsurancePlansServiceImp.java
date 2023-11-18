@@ -13,80 +13,61 @@ import com.hexaware.medicalbillingsystems.dto.InsurancePlansDTO;
 import com.hexaware.medicalbillingsystems.entities.InsurancePlans;
 import com.hexaware.medicalbillingsystems.repository.InsurancePlansRepository;
 import com.hexaware.medicalbillingsystems.restcontroller.HealthcareProviderRestController;
-
+/*
+@Author :   Rajat Darvhekar  
+Modified Date : 02-11-2023
+Description :Service Implementation class for InsurancePlansServiceImpl implementing IInsurancePlansService
+*/
 @Service
-public class InsurancePlansServiceImp implements IInsurancePlansService{
-	Logger logger =LoggerFactory.getLogger(HealthcareProviderRestController.class);
+public class InsurancePlansServiceImp implements IInsurancePlansService {
+
+	Logger logger=LoggerFactory.getLogger(InsurancePlansServiceImp.class);
 	@Autowired
-	IInsuranceClaimsService service;
-	@Autowired
-	InsurancePlansRepository repository;
+	private InsurancePlansRepository repository;
 	@Override
 	public InsurancePlans addInsurancePlan(InsurancePlansDTO plansdto) {
-		
-		InsurancePlans plans=new InsurancePlans();
+		InsurancePlans plans = new InsurancePlans();
 		plans.setPlanName(plansdto.getPlanName());
 		plans.setPlanType(plansdto.getPlanType());
 		plans.setPlanCoverAmount(plansdto.getPlanCoverAmount());
 		plans.setPlanEmi(plansdto.getPlanEmi());
 		plans.setPlanDetails(plansdto.getPlanDetails());
-		/*
-		 * 
-		 * Set<InsuranceClaims> claimSet = new HashSet<>(); for (InsuranceClaims
-		 * claimdto : plansdto.getClaims()) { InsuranceClaims claims = new
-		 * InsuranceClaims(); claims.setClaimAmount(claimdto.getClaimAmount());
-		 * claims.setClaimStatus(claimdto.getClaimStatus());
-		 * claims.setPatient(claimdto.getPatient()); claims.setPlans(plans);
-		 * 
-		 * claimSet.add(claimdto); }
-		 * 
-		 * plans.setClaims(claimSet);
-		 */
-		
-		
+		logger.info("New insurance plan is added!!!");
 		return repository.save(plans);
 	}
-
-//	@Override
-//	public InsurancePlans updateInsurancePlans(InsurancePlansDTO plansdto) {
-//		// TODO Auto-generated method stub
-//		return ;
-//	}
-
 	@Override
 	public void deleteInsurancePlan(int planId) {
-		
+		logger.warn("Insurance plans "+planId+" is deleted!!!");
 		repository.deleteById(planId);
-		
 	}
-
 	@Override
 	public InsurancePlansDTO getPlanByName(String planName) {
-		InsurancePlans plans=repository.findByPlanName(planName).orElse(new InsurancePlans());
-		InsurancePlansDTO planDTO=new InsurancePlansDTO();
+		InsurancePlans plans = repository.findByPlanName(planName).orElse(new InsurancePlans());
+		InsurancePlansDTO planDTO = new InsurancePlansDTO();
 		planDTO.setPlanId(plans.getPlanId());
 		planDTO.setPlanName(plans.getPlanName());
 		planDTO.setPlanType(plans.getPlanType());
 		planDTO.setPlanCoverAmount(plans.getPlanCoverAmount());
 		planDTO.setPlanEmi(plans.getPlanEmi());
-		planDTO.setPlanEmi(plans.getPlanEmi());
+		planDTO.setPlanDetails(plans.getPlanDetails());
 		planDTO.setClaims(plans.getClaims());
-		logger.warn("Plan by name not found");
+		logger.info("Insurance plan "+planName+" is displayed!!!");;
 		return planDTO;
-		
 	}
-
 	@Override
 	public List<InsurancePlans> getAllPlans() {
-
 		return repository.findAll();
 	}
-
 	@Override
 	public InsurancePlans updateInsurancePlans(InsurancePlansDTO plansdto) {
-    logger.info("Updated Successfully");
-		return null;
+		InsurancePlans plans = new InsurancePlans();
+		plans.setPlanId(plansdto.getPlanId());
+		plans.setPlanName(plansdto.getPlanName());
+		plans.setPlanType(plansdto.getPlanType());
+		plans.setPlanCoverAmount(plansdto.getPlanCoverAmount());
+		plans.setPlanEmi(plansdto.getPlanEmi());
+		plans.setPlanDetails(plansdto.getPlanDetails());
+		logger.warn("Insurance plan is updated!!!");
+		return repository.save(plans);
 	}
-
-
 }

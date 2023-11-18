@@ -6,7 +6,11 @@ import java.util.Set;
 import com.hexaware.medicalbillingsystems.dto.HealthcareProviderDTO;
 import com.hexaware.medicalbillingsystems.entities.HealthcareProvider;
 
-
+/*
+@Author :  Hema Sree  
+Modified Date : 02-11-2023
+Description : Interface of  IHealthcareProviderService performing the following operations
+*/
 public interface IHealthcareProviderService {
 
 	public HealthcareProvider addProvider(HealthcareProviderDTO providerdto);
@@ -15,5 +19,5 @@ public interface IHealthcareProviderService {
 	
 	public List<HealthcareProvider> getAllHealthcareProviders();
 	public HealthcareProviderDTO getProviderById(int providerId);
-    
+	
 }
