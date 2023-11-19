@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hexaware.medicalbillingsystems.service.AuthJWTService;
 /*
 @Author :  Hema Sree   
 Modified Date : 14-11-2023
@@ -25,20 +27,24 @@ public class LoginRestController {
 	private AuthJWTService jwtService;
 	
 	Logger logger=LoggerFactory.getLogger(LoginRestController.class);
+
 	public String hello() {
 		return "Welcome to Login Page";
 	}
+
 	@PostMapping("/authenticate")
 	public String authenticateAndGenerateToken(@RequestBody AuthRequest authReq) {
 		
 			Authentication authenticate = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authReq.getUsername(), authReq.getPassword()));
+
 			// If authentication is successful, generate a JWT
 			String Token=null;
 			if (authenticate.isAuthenticated()) {
 				Token=jwtService.generateToken(authReq.getUsername());
 				logger.info("JWT Token successfully generated!!!");
 			}
+
 			else {
 				logger.info("Not Found USERNAME!!!!");
 				throw new UsernameNotFoundException("UserName Not Found!!!! ");
